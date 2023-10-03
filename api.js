@@ -4,11 +4,11 @@ const app = express();
 
 app.use(express.json());
 
+//MongoDB to LocalHost
 app.get("/", async(req, res) => {
     let data = await dbconnect();
     data = await data.find().toArray();
     res.send(data);
-    // demo.innerHTML = data;
     // res.end();
 })
 
@@ -17,13 +17,14 @@ app.get("*",(req, res) => {
 })
 
 app.post("/", async (req, res) => {
-    console.log(req.body);
-    res.send(req.body);
-    res.send({say_hi : "hello rohit!"});
+    // console.log(req.body);
+    // res.send(req.body);
+    // res.send({say_hi : "hello rohit!"});
 
-    // let data = await dbconnect();
-    // let result = await data.insertMany(req.body);
-    // res.send(result);
+    //connect MongoDB to Postman server
+    let data = await dbconnect();
+    let result = await data.insertOne(req.body);
+    res.send(result);
 })
 
 app.listen(8080);
